@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="euc-kr">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" id="viewport" content="width=1119px, user-scalable=yes">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+
+<!-- 리뉴얼 적용 2019.12.02 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.dominos.co.kr/domino/asset/css/font.css">
+<link rel="stylesheet" type="text/css" href="/test.css">
+<link rel="stylesheet" type="text/css" href="/main.css">
+<link rel="stylesheet" type="text/css" href="/detail.css">
+
+<title>결제페이지</title>
+</head>
+<body>
+<div id="container">
+
+
+<section id="content">
+<div class="sub-type order">
+<div class="inner-box">
+<!-- 1depth 메뉴명 & 네비게이션 -->
+<div class="page-title-wrap">
+<h2 class="page-title">결제하기</h2>
+</div>
+<!-- //1depth 메뉴명 & 네비게이션 -->
+
+<article class="pay">
+<div class="step-wrap"> 
+<div class="title-wrap __border">
+<h3 class="title-type"><strong>배달 정보</strong></h3>
+<div class="pay-btn-side">
+<button type="button" class="ico-time3" onclick="javascript:reserveSetting();">예약 변경</button>
+</div>
+</div>
+
+<div class="deli-info">
+<div class="address">주소</div>
+<div class="store"><span>가게가맹점</span> 052-281-3082</div>
+<div class="reserve-info new221031">
+</div>
+
+<ul class="notice-txt">
+<li class="delivery-notice"><b>* 환경보호를 위해 피클, 소스 등이 모두 받지 않기로 기본 설정됩니다.</b></li>
+<li>* 매장 상황에 따라 수령 시간이 상이할 수 있습니다.</li>
+<li>* 영업 마감 시간이 가까울 경우 매장 상황에 따라 주문이 불가할 수 있습니다.</li>
+</ul>
+</div>
+
+<div class="deli-info form">
+<dl class="chk-wrap">
+<dt></dt>
+<dd>
+<div class="form-group">
+<div class="form-item">
+<div class="chk-box v3">
+<input type="checkbox" name="order_type" id="recipient" onchange="recipientChange()">
+<label class="checkbox" for="recipient"></label>
+<label for="recipient">주문자와 동일</label>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+
+<dl>
+<dl>
+<dt>이름</dt>
+<dd>
+<div class="form-item">
+<input type="text" id="customerName" name="customerName" value="" maxlength="8">
+</div>
+</dd>
+</dl>
+</dl>
+
+<dl>
+<dt>연락처</dt>
+<dd>
+<div class="form">
+<div class="form-group2 select-group">
+<div class="form-item">
+<div class="select-type2">
+<select id="tel1" name="tel1" title="휴대전화번호">
+<option value="010">010</option>
+<option value="011">011</option>
+<option value="016">016</option>
+<option value="017">017</option>
+<option value="018">018</option>
+<option value="019">019</option>
+</select>
+</div>
+<input type="text" id="tel2" name="tel2" maxlength="4" class="i_text" title="휴대전화번호">
+<input type="text" id="tel3" name="tel3" maxlength="4" class="i_text" title="휴대전화번호">
+</div>
+</div>
+</div>
+</dd>
+</dl>
+
+<dl>
+<dt>요청사항</dt>
+<dd>
+<div class="form">
+<div class="form-item divide-area">
+
+<div class="select-type2">
+<select name="more_req_box" onchange="directMessage();">
+<option value="">(선택) 요청사항을 선택하세요.</option>
+
+<option value="직접 받을게요.">직접 받을게요.</option>
+<option value="direct">직접 입력</option>
+</select>
+</div>
+
+<div class="chk-box v3">
+<input type="checkbox" name="user_etc" id="user_etc" value="Y">
+<label class="checkbox" for="user_etc"></label>
+<label for="user_etc">요청사항 다음에도 사용</label>
+</div>
+</div>
+<!-- 직접 입력 -->
+<div class="form-item form-text">
+<input style="display:none;" name="more_req" id="more_req" type="text" onkeyup="checkByte(this, 50)" value="" placeholder="주문시 요청사항을 입력하세요. (최대 25자까지 입력가능)">
+</div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+</div><!-- //step-wrap -->
+
+<!-- 주문내역 -->
+<div class="step-wrap">
+<div class="title-wrap">
+<div class="title-type"><strong>주문내역</strong></div>
+</div>
+<div class="order-step">
+<ul>
+<li>
+<div class="menu">
+<!-- 피자 명  -->
+<strong class="goods_name">메인 제품명 + 수량</strong>
+<!-- //피자 명  -->
+</div>
+<div class="topping">
+<span style="display:none;" id="goods_name_brief">사이드 추가 제품명 + 수량</span>
+
+<div class="item">
+<span>제품명 + 수량</span> /&nbsp; <span>XXXXX</span>원
+
+<!-- 토핑 -->
+<!-- //토핑 -->
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- //주문내역 -->
+
+<!-- 할인 적용 -->
+<div class="step-wrap" id="dc_info">
+<input type="hidden" id="prmt_idx" value="0">
+<div class="title-wrap">
+<h3 class="title-type"><strong>할인 적용</strong></h3>
+</div>
+<div class="guide-box3">할인을 선택해주세요.</div>
+<div class="discount-step">                  
+<ul>
+<li id="myCoupon"><a href="javascript:changePrmt('myCoupon');" class="btn-type-brd5">VIP할인</a></li>
+</ul>
+</div> <!-- //discount-step -->
+</div>
+<!-- //할인 적용 -->
+
+
+
+<!-- <div class="order_section order_sale" id="dc_info">
+<div class="tit_order">
+<strong>할인</strong>
+</div>
+</div> -->
+
+<!-- 결제방법 -->
+<div class="step-wrap pay-step" id="pay_info">
+<input type="hidden" id="userInfo" value="">
+<input type="hidden" id="flagPin" value="">
+
+<div class="title-wrap">
+<h3 class="title-type"><strong>결제수단 선택</strong></h3>
+</div>
+
+
+<section class="otherMethod-wrap __active">
+<div class="dimLayer"></div>
+<div class="pay-info pay-info1">
+
+<ul class="list-chk list-chk2">
+<li>
+<div class="chk-box btn-payMethod" id="pay_method_4" data-hidedefault="" data-value="9|4|Y" onclick="clickPayType('radio', this);">
+<input type="radio" id="pay1" name="pay" onclick="event.stopPropagation()">
+<label class="paynm" for="pay1">카드결제</label>
+</div>
+</li>
+
+<li>
+<div class="chk-box btn-payMethod" id="pay_method_4" data-hidedefault="" data-value="9|4|Y" onclick="clickPayType('radio', this);">
+<input type="radio" id="pay1" name="pay" onclick="event.stopPropagation()">
+<label class="paynm" for="pay1">현금결제</label>
+</div>
+</li>
+
+<li>
+<div class="chk-box btn-payMethod" id="pay_method_4" data-hidedefault="" data-value="9|4|Y" onclick="clickPayType('radio', this);">
+<input type="radio" id="pay1" name="pay" onclick="event.stopPropagation()">
+<label class="paynm" for="pay1">포인트결제</label>
+</div>
+</li>
+</ul>
+</div>
+
+
+
+</section>
+</div>
+<!-- // 결제방법 -->
+
+<div class="step-wrap receipt-wrap" id="moneyVoucher">
+    <div class="title-wrap">
+        <h3 class="title-type"><strong>포인트</strong></h3>
+
+    </div>
+    <div class="btn-wrap">
+        <div class="form date-wrap">
+            <div class="form-item">
+                <input type="text" class="date" name="mVoucherUsePrice" id="mVoucherUsePrice" value="포인트잔액확인가능한부분" readonly="readonly">
+                <button type="button" class="btn-clk" >포인트 사용</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 결제 금액, 퀵 오더로 설정, 결제 및 주문완료 -->
+<div class="step-wrap" id="final_pay_info">
+<div class="step-wrap">
+<div class="title-wrap">
+<h3 class="title-type"><strong>최종결제금액</strong></h3>
+</div>
+
+<div class="total-step">
+<ul>
+<li>
+<p class="tit">총 상품 금액</p>
+<p class="price"><em><span id="basketTotalPrice">XX,XXX</span></em>원</p>
+</li>
+<li class="discount">
+<p class="tit">총 할인 금액</p>
+<p class="price"><em><span id="basketDcPrice">X</span></em>원</p>
+</li>
+
+
+<li class="total">
+<p class="tit">총 결제 금액</p>
+<p class="price"><em><span id="basketAccountPrice">XX,XXX</span></em>원</p>
+<input type="hidden" value="20400" id="tmpPrice">
+<input type="hidden" name="a_basketNo" id="a_basketNo" value="221486995">
+</li>
+</ul>
+<!-- 가맹점인 경우만 제3자 정보제공동의 -->
+<div class="sub-text2 pt-50">
+<p>
+위 주문 내용을 확인하였으며
+<a class="td-udl" href="javascript:UI.layerPopUp({selId:'#a_agree_popup'})">개인정보 제3자 제공</a> 
+및 결제에 동의합니다.
+</p>
+</div>
+<!-- 가맹점인 경우만 제3자 정보제공동의 끝-->
+</div>
+</div>
+</div>
+<!-- // 결제 금액, 퀵 오더로 설정, 결제 및 주문완료 -->
+
+<!-- 주문하기 버튼 -->
+<div class="btn-wrap pay-btn">
+<a href="javascript:;" id="doOrder" onclick="reserveValid()" class="btn-type">결제하기</a>
+</div>
+<!-- //주문하기 버튼 -->
+
+</article>
+</div><!-- //inner-box -->
+</div><!-- //sub-type order -->
+<input type="hidden" name="viewDay" id="viewDay" value="">
+<input type="hidden" name="viewTime" id="viewTime" value="">
+<input type="hidden" name="viewReserveGubun" id="viewReserveGubun" value="">
+
+<script>
+$(document).ready(function() {
+child_reserve_reset();
+});
+</script>
+
+<div class="pop-layer" id="pop-reserve-setting">
+<div class="dim"></div>
+<div class="pop-wrap">
+<div class="pop-title-wrap">
+<h2 class="pop-title">예약 설정</h2>
+</div>
+<div class="pop-content">
+<div class="form-group">
+<div class="form-item">
+<div class="select-type2">
+<select id="reserve_day" name="reserve_day" onchange="arriveTime('', 'reserve_day','reserve_time11','H', '', '');">
+<option value="2024051708" selected="selected">오늘 5/17(금)</option>
+<option value="2024051808">내일 5/18(토)</option>
+</select>
+</div>
+<div class="select-type2">
+<select id="reserve_time11" name="reserve_time11" onchange="arriveTime('', 'reserve_time11', 'reserve_time12', 'M', '', '');"><option value="2024051700">시</option><option value="2024051711">11시</option><option value="2024051712">12시</option><option value="2024051713">13시</option><option value="2024051714">14시</option><option value="2024051715">15시</option><option value="2024051716">16시</option><option value="2024051717">17시</option><option value="2024051718">18시</option><option value="2024051719">19시</option><option value="2024051720" selected="selected">20시</option><option value="2024051721">21시</option><option value="2024051722">22시</option></select>
+</div>
+<div class="select-type2">
+<select id="reserve_time12" name="reserve_time12" onchange="checkSelect();"><option value="">분</option><option value="0000">00분</option><option value="1000" selected="selected">10분</option><option value="2000">20분</option><option value="3000">30분</option><option value="4000">40분</option><option value="5000">50분</option></select>
+</div>
+</div>
+</div>
+<div class="warn-txt" style="display:none;">
+<!-- <p>
+현재 오늘예약 주문 가능한 시간을 초과하였습니다.<br />
+내일예약으로 진행해주시기 바랍니다.
+</p> -->
+<p>
+선택하신 시각의 주문 예약이 마감되었습니다.<br>
+예약 설정을 다시 해주세요.
+</p>
+</div>
+<div class="btn-wrap">
+<button type="button" class="btn-type1" disabled="" onclick="saveReserveSetting('221486995')">완료</button>
+</div>
+</div>
+<a href="javscript:;" class="btn-close"></a>
+</div>
+</div>
+
+</section>
+
+
+</body>
+</html>
